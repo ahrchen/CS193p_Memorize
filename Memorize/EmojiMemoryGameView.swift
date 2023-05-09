@@ -37,25 +37,23 @@ struct ContentView_Previews: PreviewProvider {
 
 struct CardView: View {
     let card: EmojiMemoryGame.Card
+    private var cardDegrees: Double {
+        get {
+            card.isMatched ? 360 : 0
+        }
+    }
     
     var body: some View {
-        GeometryReader(content: { geometry in
+        GeometryReader{ geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                if card.isFaceUp {
-                    shape.fill(.white)
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth)
-                    Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(0.5)
-                    Text(card.content)
-                        .font(font(in:geometry.size))
-                } else if card.isMatched {
-                    shape.opacity(0)
-                }
-                else {
-                    shape.fill()
-                }
+                Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: 110-90)).padding(5).opacity(DrawingConstants.pieOpacity)
+                Text(card.content)
+                    .rotationEffect(Angle(degrees: cardDegrees))
+                    .animation(.linear(duration: 1.5).repeatForever(autoreverses: false), value: cardDegrees)
+                    .font(font(in:geometry.size))
             }
-        })
+        }
+        .cardify(isFaceUp: card.isFaceUp)
     }
     
     private func font(in size: CGSize) -> Font {
@@ -66,5 +64,6 @@ struct CardView: View {
         static let cornerRadius: CGFloat = 10
         static let lineWidth: CGFloat = 3
         static let fontScale: CGFloat = 0.7
+        static let pieOpacity: CGFloat = 0.5
     }
 }
