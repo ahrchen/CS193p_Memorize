@@ -4,6 +4,7 @@
 //
 //  Created by Raymond Chen on 6/12/22.
 //
+// Completed Lecture 8 with animations
 
 import SwiftUI
 
