@@ -15,7 +15,13 @@ class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
     @Published private(set) var model: MemoryGame<String>
-    private var theme: [String]
+    @Published private var theme: [String] {
+        didSet {
+            if theme != oldValue {
+                restart()
+            }
+        }
+    }
     
     init(theme: [String]) {
         self.theme = theme
