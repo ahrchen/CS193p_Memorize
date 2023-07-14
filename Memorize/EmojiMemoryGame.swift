@@ -14,18 +14,21 @@ func makeCardContent(index: Int) -> String {
 class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
-    private static let carEmojis = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜", "🛴", "🚲","🛵","🏍","🛺", "🚡", "🚠", "🚟","🚃","🚋","🚞", "🚝"]
-    private static let petEmojis = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🐴"]
-    private static let foodEmojis = ["🍏", "🍎", "🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍈","🍒","🍑","🥭","🍍","🥥","🥝","🍅","🍆","🥑"]
+    @Published private(set) var model: MemoryGame<String>
+    private var theme: [String]
     
-    static func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 5) { pairIndex in
-            carEmojis[pairIndex]
+    init(theme: [String]) {
+        self.theme = theme
+        model = MemoryGame<String>(numberOfPairsOfCards: 5) { pairIndex in
+            theme[pairIndex]
         }
     }
     
-    @Published private(set) var model = createMemoryGame()
-    
+    func createMemoryGame() -> MemoryGame<String> {
+        MemoryGame<String>(numberOfPairsOfCards: 5) { pairIndex in
+            theme[pairIndex]
+        }
+    }
     
     var cards: Array<Card> {
         return model.cards
@@ -42,6 +45,6 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func restart() {
-        model = EmojiMemoryGame.createMemoryGame()
+        model = createMemoryGame()
     }
 }
