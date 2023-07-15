@@ -123,14 +123,14 @@ struct EmojiMemoryGameView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        let theme =  "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) }
-        let game = EmojiMemoryGame(theme: theme)
-        game.choose(game.cards.first!)
-        return EmojiMemoryGameView(game: game)
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let theme =  "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) }
+//        let game = EmojiMemoryGame(theme: theme)
+//        game.choose(game.cards.first!)
+//        return EmojiMemoryGameView(game: game)
+//    }
+//}
 
 struct CardView: View {
     let card: EmojiMemoryGame.Card
