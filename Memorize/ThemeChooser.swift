@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ThemeChooser: View {
+    
+    @EnvironmentObject var store: ThemeStore
+
     @State var chosenThemeIndex = 0
-    let themes = [
-        "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) },
-        "🏈⚾️🏀⚽️🎾🏐🥏🏓⛳️🥅🥌🏂⛷🎳".map{ String($0) }
-    ]
+    
     
     var body: some View {
         themeControlButton
@@ -21,7 +21,7 @@ struct ThemeChooser: View {
     var themeControlButton: some View {
         Button {
             withAnimation {
-                chosenThemeIndex = (chosenThemeIndex + 1) % themes.count
+                chosenThemeIndex = (chosenThemeIndex + 1) % store.themes.count
             }
         } label: {
             Image(systemName: "paintbrush.pointed")

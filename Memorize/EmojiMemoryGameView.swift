@@ -10,6 +10,8 @@ import SwiftUI
 
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
+    @EnvironmentObject var store: ThemeStore
+    @State var chosenThemeIndex = 0
     
     @Namespace private var dealingNamespace
     
@@ -19,6 +21,7 @@ struct EmojiMemoryGameView: View {
                 gameBody
                 
                 HStack {
+                    themeControlButton
                     shuffle
                     Spacer()
                     restart
@@ -109,7 +112,19 @@ struct EmojiMemoryGameView: View {
             withAnimation() {
                 dealt = []
                 game.restart()
+                
             }
+        }
+    }
+    
+    var themeControlButton: some View {
+        Button {
+            withAnimation {
+                chosenThemeIndex = (chosenThemeIndex + 1) % store.themes.count
+                game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
+            }
+        } label: {
+            Image(systemName: "paintbrush.pointed")
         }
     }
     

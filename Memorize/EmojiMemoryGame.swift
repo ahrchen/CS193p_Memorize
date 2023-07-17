@@ -15,25 +15,20 @@ class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
     @Published private(set) var model: MemoryGame<String>
-    @Published private var theme: [String] {
-        didSet {
-            if theme != oldValue {
-                restart()
-            }
-        }
-    }
+    static var themeArray =  "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) }
+    var themeArray: [String]
     
-    init(theme: [String]) {
-        self.theme = theme
-        model = MemoryGame<String>(numberOfPairsOfCards: 5) { pairIndex in
-            theme[pairIndex]
-        }
+    init() {
+        themeArray =  EmojiMemoryGame.themeArray
+        model = MemoryGame<String>(numberOfPairsOfCards: 5,  createCardContent: { pairIndex in
+            return EmojiMemoryGame.themeArray[pairIndex]
+        })
     }
     
     func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 5) { pairIndex in
-            theme[pairIndex]
-        }
+        MemoryGame<String>(numberOfPairsOfCards: 5,  createCardContent: { pairIndex in
+            return themeArray[pairIndex]
+        })
     }
     
     var cards: Array<Card> {
@@ -52,5 +47,10 @@ class EmojiMemoryGame: ObservableObject {
     
     func restart() {
         model = createMemoryGame()
+    }
+    
+    func changeTheme(themeArray: [String]) {
+        self.themeArray = themeArray
+        restart()
     }
 }

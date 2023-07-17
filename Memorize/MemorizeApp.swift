@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct MemorizeApp: App {
-    private static let theme =  "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) }
-    private let game = EmojiMemoryGame(theme: theme)
+    @StateObject var themeStore =  ThemeStore(named: "Default")
+    @StateObject var game  = EmojiMemoryGame()
+    
     
     var body: some Scene {
         WindowGroup {
             EmojiMemoryGameView(game: game)
+                .environmentObject(themeStore)
         }
     }
 }
