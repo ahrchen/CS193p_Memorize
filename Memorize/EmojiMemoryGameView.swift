@@ -21,7 +21,7 @@ struct EmojiMemoryGameView: View {
                 gameBody
                 
                 HStack {
-                    themeControlButton
+                    ThemeChooser(game: game)
                     shuffle
                     Spacer()
                     restart
