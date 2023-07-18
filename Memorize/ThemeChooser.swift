@@ -11,6 +11,7 @@ struct ThemeChooser: View {
     
     @EnvironmentObject var store: ThemeStore
     @ObservedObject var game: EmojiMemoryGame
+    @State var showingGoToMenu = false
     
     @State var chosenThemeIndex = 0
     
@@ -18,6 +19,7 @@ struct ThemeChooser: View {
     var body: some View {
         themeControlButton
     }
+    
     
     var themeControlButton: some View {
         Button {
@@ -29,7 +31,11 @@ struct ThemeChooser: View {
             Image(systemName: "paintbrush.pointed")
         }
         .contextMenu { contextMenu }
+        .sheet(isPresented: $showingGoToMenu) {
+            goToMenu
+        }
     }
+    
     
     @ViewBuilder
     var contextMenu: some View {
@@ -39,28 +45,60 @@ struct ThemeChooser: View {
         AnimatedActionButton(title: "New", systemImage: "plus") {
             // Create New Theme
         }
-        AnimatedActionButton(title: "delete", systemImage: "minus.circle") {
+        AnimatedActionButton(title: "Delete", systemImage: "minus.circle") {
             // Delete Theme
         }
         AnimatedActionButton(title: "Manager", systemImage: "slider.vertical.3") {
             // Manage Themes
         }
-        goToMenu
+        Button("Show Sheet") {
+            showingGoToMenu.toggle()
+        }
     }
     
+    
+    @ViewBuilder
     var goToMenu: some View {
-        Menu {
+        List {
             ForEach (store.themes) { theme in
-                AnimatedActionButton(title: theme.name) {
-                    if let index = store.themes.index(matching: theme) {
-                        chosenThemeIndex = index
+                VStack (alignment: .leading) {
+                    
+                    AnimatedActionButton(title: theme.name) {
+                        if let index = store.themes.index(matching: theme) {
+                            chosenThemeIndex = index
+                        }
+                        game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
+                        showingGoToMenu.toggle()
                     }
-                    game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
+                    Spacer()
+                    Text("Available Emojis:")
+                    Text("\(theme.emojis)")
+                    HStack {
+                        Text("Card Background Color: ")
+                        Rectangle()
+                            .fill(.red)
+                            .frame(width: 20, height: 20)
+                            .fixedSize()
+                    }
+                    Text("Number of Cards Dealt: \(theme.cardsDealt)")
+                   
+                    
                 }
             }
-        } label: {
-            Label("Go To", systemImage: "text.insert")
         }
+    }
+}
+
+struct SheetView: View {
+    @Environment(\.dismiss) var dismiss
+
+    var body: some View {
+        Button("Press to dismiss") {
+            dismiss()
+        }
+        .font(.title)
+        .padding()
+        .background(.black)
     }
 }
 

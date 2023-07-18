@@ -11,6 +11,21 @@ struct Theme: Identifiable, Codable, Hashable {
     var name: String
     var emojis: String
     var id: Int
+    var cardsDealt: Int
+    
+    init(name: String, emojis: String, id: Int, cardsDealt: Int) {
+        self.name = name
+        self.emojis = emojis
+        self.id = id
+        self.cardsDealt = cardsDealt
+    }
+    
+    init (name: String, emojis: String, id: Int) {
+        self.name = name
+        self.emojis = emojis
+        self.id = id
+        self.cardsDealt = 5
+    }
 }
 
 class ThemeStore: ObservableObject {
