@@ -155,7 +155,7 @@ struct CardView: View {
             ZStack {
                 Group {
                     if card.isConsumingBonusTime {
-                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-animatedBonusRemaining)*360-90))
+                        Pie(startAngle: Angle(degrees: 0-90), endAngle: Angle(degrees: (1-animatedBonusRemaining)*360-90.1))
                             .onAppear {
                                 animatedBonusRemaining = card.bonusRemaining
                                 withAnimation(.linear(duration: card.bonusTimeRemaining)) {
