@@ -44,7 +44,7 @@ class ThemeStore: ObservableObject {
         self.name = name
 //        restoreFromUserDefaults()
         if themes.isEmpty {
-            print("Using built-in palettes")
+            print("Using built-in themes")
             insertTheme(named: "Vehicles", emojis: "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜")
             insertTheme(named: "Sports", emojis: "🏈⚾️🏀⚽️🎾🏐🥏🏓⛳️🥅🥌🏂⛷🎳")
             insertTheme(named: "Music", emojis: "🎼🎤🎹🪘🥁🎺🪗🪕🎻")
@@ -55,7 +55,7 @@ class ThemeStore: ObservableObject {
             insertTheme(named: "COVID", emojis: "💉🦠😷🤧🤒")
             insertTheme(named: "Faces", emojis: "😀😃😄😁😆😅😂🤣🥲☺️😊😇🙂🙃😉😌😍🥰😘😗😙😚😋😛😝😜🤪🤨🧐🤓😎🥸🤩🥳😏😞😔😟😕🙁☹️😣😖😫😩🥺😢😭😤😠😡🤯😳🥶😥😓🤗🤔🤭🤫🤥😬🙄😯😧🥱😴🤮😷🤧🤒🤠")
         } else {
-            print("successfully loaded palettes from userDefaults")
+            print("successfully loaded themes from userDefaults")
         }
     }
     

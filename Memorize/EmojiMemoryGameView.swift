@@ -21,21 +21,21 @@ struct EmojiMemoryGameView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 gameBody
-                
                 HStack {
-                    ThemeChooser(game: game)
-                    shuffle
+                    VStack(alignment: .leading) {
+                        Text("Score: \(game.getScore())")
+                        ThemeChooser(game: game)
+                    }
                     Spacer()
-                    restart
+                    VStack {
+                        shuffle
+                        restart
+                    }
                 }
-            
-                
             }
             deckBody
-            
         }
         .padding()
-        
     }
     
     @State private var dealt = Set<Int>()

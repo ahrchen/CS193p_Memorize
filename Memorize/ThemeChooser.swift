@@ -28,7 +28,7 @@ struct ThemeChooser: View {
                 game.changeThemes(theme: chosenTheme)
             }
         } label: {
-            Image(systemName: "paintbrush.pointed")
+            Label(chosenTheme.name, systemImage: "paintbrush.pointed")
         }
         .contextMenu { contextMenu }
         .sheet(isPresented: $showingGoToMenu) {
