@@ -36,6 +36,9 @@ struct EmojiMemoryGameView: View {
             deckBody
         }
         .padding()
+        .onAppear {
+            game.changeThemes(theme: theme)
+        }
     }
     
     @State private var dealt = Set<Int>()
