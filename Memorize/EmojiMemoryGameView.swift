@@ -19,8 +19,16 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
+            
             VStack {
-                gameBody
+                if game.isGameAvailable {
+                    gameBody
+                } else {
+                    Text("Game is Unavailable")
+                        .font(.largeTitle)
+                    Text("Please select another theme or add emojis to theme")
+                    Spacer()
+                }
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Score: \(game.getScore())")
@@ -33,7 +41,10 @@ struct EmojiMemoryGameView: View {
                     }
                 }
             }
-            deckBody
+            if game.isGameAvailable {
+                deckBody
+            }
+            
         }
         .padding()
         .onAppear {
@@ -80,7 +91,6 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        
         .foregroundColor(Color(rgbaColor: theme.cardColor))
     }
     

@@ -16,7 +16,9 @@ class EmojiMemoryGame: ObservableObject {
     
     @Published private(set) var model: MemoryGame<String>
     private(set) var theme: Theme
-    
+    var isGameAvailable: Bool {
+        !theme.emojisArray.isEmpty
+    }
     static var defaultTheme = Theme(name: "Default", emojis: "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜", id: 9999)
 
     init() {
@@ -43,15 +45,21 @@ class EmojiMemoryGame: ObservableObject {
     // MARK: - Intent(s)
     
     func choose(_ card: Card) {
-        model.choose(card)
+        if isGameAvailable {
+            model.choose(card)
+        }
     }
     
     func shuffle() {
-        model.shuffle()
+        if isGameAvailable {
+            model.shuffle()
+        }
     }
     
     func restart() {
-        model = createMemoryGame()
+        if isGameAvailable {
+            model = createMemoryGame()
+        }
     }
     
     func changeThemes(theme: Theme) {

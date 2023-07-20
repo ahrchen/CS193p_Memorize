@@ -43,7 +43,7 @@ struct ThemeChooser: View {
             // Edit Theme
         }
         AnimatedActionButton(title: "New", systemImage: "plus") {
-            // Create New Theme
+            store.insertTheme(named: "New")
         }
         AnimatedActionButton(title: "Delete", systemImage: "minus.circle") {
             // Delete Theme
@@ -62,7 +62,6 @@ struct ThemeChooser: View {
         List {
             ForEach (store.themes) { theme in
                 VStack (alignment: .leading) {
-                    
                     AnimatedActionButton(title: theme.name) {
                         if let index = store.themes.index(matching: theme) {
                             store.chosenThemeIndex = index
