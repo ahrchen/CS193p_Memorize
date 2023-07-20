@@ -12,9 +12,9 @@ struct ThemeChooser: View {
     @EnvironmentObject var store: ThemeStore
     @ObservedObject var game: EmojiMemoryGame
     @State var showingGoToMenu = false
-    
-    @State var chosenThemeIndex = 0
-    
+    var chosenTheme: Theme {
+        store.themes[store.chosenThemeIndex]
+    }
     
     var body: some View {
         themeControlButton
@@ -24,8 +24,8 @@ struct ThemeChooser: View {
     var themeControlButton: some View {
         Button {
             withAnimation {
-                chosenThemeIndex = (chosenThemeIndex + 1) % store.themes.count
-                game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
+                store.chosenThemeIndex = (store.chosenThemeIndex + 1) % store.themes.count
+                game.changeThemes(theme: chosenTheme)
             }
         } label: {
             Image(systemName: "paintbrush.pointed")
@@ -65,9 +65,9 @@ struct ThemeChooser: View {
                     
                     AnimatedActionButton(title: theme.name) {
                         if let index = store.themes.index(matching: theme) {
-                            chosenThemeIndex = index
+                            store.chosenThemeIndex = index
                         }
-                        game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
+                        game.changeThemes(theme: theme)
                         showingGoToMenu.toggle()
                     }
                     Spacer()
@@ -80,7 +80,7 @@ struct ThemeChooser: View {
                             .frame(width: 20, height: 20)
                             .fixedSize()
                     }
-                    Text("Number of Cards Dealt: \(theme.cardsDealt)")
+                    Text("Number of Cards Dealt: \(theme.numCardsDealt)")
                    
                     
                 }

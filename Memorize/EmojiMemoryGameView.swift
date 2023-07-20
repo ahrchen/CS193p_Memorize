@@ -11,7 +11,9 @@ import SwiftUI
 struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
     @EnvironmentObject var store: ThemeStore
-    @State var chosenThemeIndex = 0
+    var theme: Theme {
+        store.themes[store.chosenThemeIndex]
+    }
     
     @Namespace private var dealingNamespace
     
@@ -76,7 +78,7 @@ struct EmojiMemoryGameView: View {
             }
         }
         
-        .foregroundColor(CardConstants.color)
+        .foregroundColor(Color(rgbaColor: theme.cardColor))
     }
     
     var deckBody: some View {
@@ -88,7 +90,7 @@ struct EmojiMemoryGameView: View {
             }
         }
         .frame(width: CardConstants.undealtWidth, height: CardConstants.undealtHeight)
-        .foregroundColor(CardConstants.color)
+        .foregroundColor((Color(rgbaColor: theme.cardColor)))
         .onTapGesture {
             // "deal" cards
             for card in game.cards {
@@ -117,19 +119,7 @@ struct EmojiMemoryGameView: View {
         }
     }
     
-    var themeControlButton: some View {
-        Button {
-            withAnimation {
-                chosenThemeIndex = (chosenThemeIndex + 1) % store.themes.count
-                game.changeTheme(themeArray: store.themes[chosenThemeIndex].emojis.map({String($0)}))
-            }
-        } label: {
-            Image(systemName: "paintbrush.pointed")
-        }
-    }
-    
     private struct CardConstants {
-        static let color = Color.red
         static let aspectRatio: CGFloat = 2/3
         static let dealDuration: Double = 0.5
         static let totalDealDuration: Double = 2

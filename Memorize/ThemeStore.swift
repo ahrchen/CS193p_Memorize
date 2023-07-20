@@ -11,26 +11,33 @@ struct Theme: Identifiable, Codable, Hashable {
     var name: String
     var emojis: String
     var id: Int
-    var cardsDealt: Int
+    var numCardsDealt: Int
+    var cardColor: RGBAColor
     
-    init(name: String, emojis: String, id: Int, cardsDealt: Int) {
+    var emojisArray: [String] {
+        emojis.map({String($0)})
+    }
+    
+    init(name: String, emojis: String, id: Int, numCardsDealt: Int, cardColor: RGBAColor) {
         self.name = name
         self.emojis = emojis
         self.id = id
-        self.cardsDealt = cardsDealt
+        self.numCardsDealt = numCardsDealt
+        self.cardColor = cardColor
     }
     
     init (name: String, emojis: String, id: Int) {
         self.name = name
         self.emojis = emojis
         self.id = id
-        self.cardsDealt = 5
+        self.numCardsDealt = 5
+        self.cardColor = RGBAColor(color: .red)
     }
 }
 
 class ThemeStore: ObservableObject {
     let name: String
-    
+    var chosenThemeIndex: Int = 0
     @Published var themes = [Theme]()
     
     init(named name: String) {

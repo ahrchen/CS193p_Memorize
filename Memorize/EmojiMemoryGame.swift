@@ -15,19 +15,20 @@ class EmojiMemoryGame: ObservableObject {
     typealias Card = MemoryGame<String>.Card
     
     @Published private(set) var model: MemoryGame<String>
-    static var themeArray =  "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜".map{ String($0) }
-    var themeArray: [String]
+    private(set) var theme: Theme
     
+    static var defaultTheme = Theme(name: "Default", emojis: "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜", id: 9999)
+
     init() {
-        themeArray =  EmojiMemoryGame.themeArray
+        theme = EmojiMemoryGame.defaultTheme
         model = MemoryGame<String>(numberOfPairsOfCards: 5,  createCardContent: { pairIndex in
-            return EmojiMemoryGame.themeArray[pairIndex]
+            return EmojiMemoryGame.defaultTheme.emojisArray[pairIndex]
         })
     }
     
     func createMemoryGame() -> MemoryGame<String> {
-        MemoryGame<String>(numberOfPairsOfCards: 5,  createCardContent: { pairIndex in
-            return themeArray[pairIndex]
+        MemoryGame<String>(numberOfPairsOfCards: theme.numCardsDealt,  createCardContent: { pairIndex in
+            return theme.emojisArray[pairIndex]
         })
     }
     
@@ -49,8 +50,9 @@ class EmojiMemoryGame: ObservableObject {
         model = createMemoryGame()
     }
     
-    func changeTheme(themeArray: [String]) {
-        self.themeArray = themeArray
+    func changeThemes(theme: Theme) {
+        self.theme = theme
         restart()
+        shuffle()
     }
 }
