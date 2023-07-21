@@ -21,19 +21,17 @@ struct ThemeChooser: View {
     
     var body: some View {
         themeControlButton
-            .popover(item: $themeToEdit) { theme in
+            .sheet(item: $themeToEdit, content: { theme in
                 ThemeEditor(theme: $store.themes[theme])
                     .onDisappear {
                         game.changeThemes(theme: chosenTheme)
                     }
-            }
+            })
             .sheet(isPresented: $managing) {
                 ThemeManager()
             }
             
     }
-        
-    
     
     var themeControlButton: some View {
         Button {
@@ -104,18 +102,6 @@ struct ThemeChooser: View {
     }
 }
 
-struct SheetView: View {
-    @Environment(\.dismiss) var dismiss
-
-    var body: some View {
-        Button("Press to dismiss") {
-            dismiss()
-        }
-        .font(.title)
-        .padding()
-        .background(.black)
-    }
-}
 
 //struct ThemeChooser_Previews: PreviewProvider {
 //    static var previews: some View {
