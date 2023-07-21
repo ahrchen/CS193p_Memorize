@@ -38,11 +38,30 @@ struct Theme: Identifiable, Codable, Hashable {
 class ThemeStore: ObservableObject {
     let name: String
     var chosenThemeIndex: Int = 0
-    @Published var themes = [Theme]()
+    @Published var themes = [Theme]() {
+        didSet {
+            storeInUserDefaults()
+        }
+    }
+    
+    private var userDefaultsKey: String {
+        "ThemeStore:" + name
+    }
+    
+    private func storeInUserDefaults() {
+        UserDefaults.standard.set(try? JSONEncoder().encode(themes), forKey: userDefaultsKey)
+    }
+    
+    private func restoreFromUserDefaults() {
+        if let jsonData = UserDefaults.standard.data(forKey: userDefaultsKey),
+           let decodedThemes = try? JSONDecoder().decode(Array<Theme>.self, from: jsonData) {
+            themes = decodedThemes
+        }
+    }
     
     init(named name: String) {
         self.name = name
-//        restoreFromUserDefaults()
+        restoreFromUserDefaults()
         if themes.isEmpty {
             print("Using built-in themes")
             insertTheme(named: "Vehicles", emojis: "🚙🚗🚘🚕🚖🏎🚚🛻🚛🚐🚓🚔🚑🚒🚀✈️🛫🛬🛩🚁🛸🚲🏍🛶⛵️🚤🛥🛳⛴🚢🚂🚝🚅🚆🚊🚉🚇🛺🚜")
