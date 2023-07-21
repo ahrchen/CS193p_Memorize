@@ -10,11 +10,12 @@ import SwiftUI
 struct ThemeEditor: View {
     @Binding var theme: Theme
     
+    
     var body: some View {
         Form {
             nameSection
             numCardsDealtSection
-            cardColorSection
+            cardColorPicker
             addEmojisSection
             removeEmojisSection
             
@@ -22,14 +23,9 @@ struct ThemeEditor: View {
         .navigationTitle("Edit \(theme.name)")
         .frame(minWidth: 300, minHeight: 350)
         .onAppear {
-            red = theme.cardColor.red * 255
-            green = theme.cardColor.green * 255
-            blue = theme.cardColor.blue * 255
-            alpha = theme.cardColor.alpha
             numCardsDealt = theme.numCardsDealt
         }
         .onDisappear {
-            theme.cardColor = RGBAColor(red: red/255, green: green/255, blue: blue/255 , alpha: alpha)
             theme.numCardsDealt = min(theme.emojis.count, numCardsDealt)
         }
     }
@@ -91,36 +87,17 @@ struct ThemeEditor: View {
         }
     }
     
-    @State private var red: Double = 0
-    @State private var green: Double = 0
-    @State private var blue: Double = 0
-    @State private  var alpha: Double = 0
+    private var cardColor: Binding<Color> {
+        Binding {
+            return Color(rgbaColor: theme.cardColor)
+        } set: { updatedColor in
+            theme.cardColor = RGBAColor(color: updatedColor)
+        }
+    }
     
-    var cardColorSection: some View {
-        
+    var cardColorPicker: some View {
         Section {
-            HStack {
-                Text("Red")
-                Divider()
-                TextField("Red", value: $red, format: .number)
-            }
-            HStack {
-                Text("Green")
-                Divider()
-                TextField("Green", value: $green, format: .number)
-            }
-            HStack {
-                Text("Blue")
-                Divider()
-                TextField("Blue", value: $blue, format: .number)
-            }
-            HStack {
-                Text("Alpha")
-                Divider()
-                TextField("Alpha", value: $alpha, format: .number)
-            }
-        } header: {
-            Text("Card Color Section")
+            ColorPicker("Card Color", selection: cardColor)
         }
     }
 }
