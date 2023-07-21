@@ -19,6 +19,7 @@
 		EE9C16C92A661F76002F0385 /* UtilityExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9C16C82A661F76002F0385 /* UtilityExtentions.swift */; };
 		EEA9C4172A68AC9B00C2D22F /* RGBAColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9C4162A68AC9B00C2D22F /* RGBAColor.swift */; };
 		EEB44867288506BA002B01E9 /* AspectVGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEB44866288506BA002B01E9 /* AspectVGrid.swift */; };
+		EEDD07972A69F909001325E9 /* ThemeEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDD07962A69F909001325E9 /* ThemeEditor.swift */; };
 		EEE9D7D8286BDFBB00150970 /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE9D7D7286BDFBB00150970 /* MemoryGame.swift */; };
 		EEE9D7DA286BE2F300150970 /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEE9D7D9286BE2F300150970 /* EmojiMemoryGame.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		EE9C16C82A661F76002F0385 /* UtilityExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtentions.swift; sourceTree = "<group>"; };
 		EEA9C4162A68AC9B00C2D22F /* RGBAColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBAColor.swift; sourceTree = "<group>"; };
 		EEB44866288506BA002B01E9 /* AspectVGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AspectVGrid.swift; sourceTree = "<group>"; };
+		EEDD07962A69F909001325E9 /* ThemeEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEditor.swift; sourceTree = "<group>"; };
 		EEE9D7D7286BDFBB00150970 /* MemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
 		EEE9D7D9286BE2F300150970 /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +78,7 @@
 				EEE9D7D7286BDFBB00150970 /* MemoryGame.swift */,
 				EE9265DD2A60E21D00730FD4 /* ThemeChooser.swift */,
 				EE0E7F652A627D9E00952F8F /* ThemeStore.swift */,
+				EEDD07962A69F909001325E9 /* ThemeEditor.swift */,
 				EE812CA22856B5F20004BCE9 /* MemorizeApp.swift */,
 				EE8D298A2A09D84500428D80 /* Cardify.swift */,
 				EE7B112C2886151400505FD5 /* Pie.swift */,
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE7B112D2886151400505FD5 /* Pie.swift in Sources */,
+				EEDD07972A69F909001325E9 /* ThemeEditor.swift in Sources */,
 				EE8D298B2A09D84500428D80 /* Cardify.swift in Sources */,
 				EE9C16C92A661F76002F0385 /* UtilityExtentions.swift in Sources */,
 				EEE9D7D8286BDFBB00150970 /* MemoryGame.swift in Sources */,
