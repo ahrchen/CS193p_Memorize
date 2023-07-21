@@ -91,7 +91,7 @@ struct ThemeChooser: View {
                     HStack {
                         Text("Card Background Color: ")
                         Rectangle()
-                            .fill(.red)
+                            .fill(Color(rgbaColor:theme.cardColor))
                             .frame(width: 20, height: 20)
                             .fixedSize()
                     }
