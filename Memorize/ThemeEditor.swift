@@ -71,19 +71,25 @@ struct ThemeEditor: View {
         }
     }
     
-    private var numberCardsDealt: Binding<Int> {
+    private var numberCardsDealt: Binding<Double> {
         Binding {
-            return theme.numCardsDealt
+            return Double(theme.numCardsDealt)
         } set: { updateNumberCardsDealt in
-            theme.numCardsDealt = min(theme.emojis.count, updateNumberCardsDealt)
+            theme.numCardsDealt = min(theme.emojis.count, Int(updateNumberCardsDealt))
         }
     }
     
     var numCardsDealtSection: some View {
         Section {
-            TextField("Number of Cards Dealt", value: numberCardsDealt, format: .number)
+            Slider(value: numberCardsDealt, in: 1...Double(theme.emojisArray.count), step: 1) {
+                Text("Number Pair Cards Dealt")
+            } minimumValueLabel: {
+                Text("1")
+            } maximumValueLabel: {
+                Text("\(theme.emojisArray.count)")
+            }
         } header: {
-            Text("Number of Cards Dealt")
+            Text("Number Pair of Cards Dealt: \(theme.numCardsDealt)")
         }
     }
     
