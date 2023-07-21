@@ -22,12 +22,6 @@ struct ThemeEditor: View {
         }
         .navigationTitle("Edit \(theme.name)")
         .frame(minWidth: 300, minHeight: 350)
-        .onAppear {
-            numCardsDealt = theme.numCardsDealt
-        }
-        .onDisappear {
-            theme.numCardsDealt = min(theme.emojis.count, numCardsDealt)
-        }
     }
     
     var nameSection: some View {
@@ -77,11 +71,17 @@ struct ThemeEditor: View {
         }
     }
     
-    @State private var numCardsDealt: Int = 0
+    private var numberCardsDealt: Binding<Int> {
+        Binding {
+            return theme.numCardsDealt
+        } set: { updateNumberCardsDealt in
+            theme.numCardsDealt = min(theme.emojis.count, updateNumberCardsDealt)
+        }
+    }
     
     var numCardsDealtSection: some View {
         Section {
-            TextField("Number of Cards Dealt", value: $numCardsDealt, format: .number)
+            TextField("Number of Cards Dealt", value: numberCardsDealt, format: .number)
         } header: {
             Text("Number of Cards Dealt")
         }
