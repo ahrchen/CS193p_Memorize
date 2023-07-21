@@ -12,13 +12,23 @@ struct ThemeChooser: View {
     @EnvironmentObject var store: ThemeStore
     @ObservedObject var game: EmojiMemoryGame
     @State var showingGoToMenu = false
+    @State var themeToEdit: Theme?
+    
     var chosenTheme: Theme {
         store.themes[store.chosenThemeIndex]
     }
     
     var body: some View {
         themeControlButton
+            .popover(item: $themeToEdit) { theme in
+                ThemeEditor(theme: $store.themes[theme])
+                    .onDisappear {
+                        game.changeThemes(theme: chosenTheme)
+                    }
+            }
+            
     }
+        
     
     
     var themeControlButton: some View {
@@ -40,13 +50,15 @@ struct ThemeChooser: View {
     @ViewBuilder
     var contextMenu: some View {
         AnimatedActionButton(title: "Edit", systemImage: "pencil") {
-            // Edit Theme
+            themeToEdit = store.theme(at: store.chosenThemeIndex)
         }
         AnimatedActionButton(title: "New", systemImage: "plus") {
             store.insertTheme(named: "New")
+            themeToEdit = store.theme(at: store.chosenThemeIndex)
+            game.changeThemes(theme: chosenTheme)
         }
         AnimatedActionButton(title: "Delete", systemImage: "minus.circle") {
-            // Delete Theme
+            store.chosenThemeIndex = store.removeTheme(at: store.chosenThemeIndex)
         }
         AnimatedActionButton(title: "Manager", systemImage: "slider.vertical.3") {
             // Manage Themes
@@ -101,8 +113,8 @@ struct SheetView: View {
     }
 }
 
-struct ThemeChooser_Previews: PreviewProvider {
-    static var previews: some View {
-        ThemeChooser(game: EmojiMemoryGame())
-    }
-}
+//struct ThemeChooser_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ThemeChooser(game: EmojiMemoryGame())
+//    }
+//}

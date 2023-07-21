@@ -24,10 +24,7 @@ struct EmojiMemoryGameView: View {
                 if game.isGameAvailable {
                     gameBody
                 } else {
-                    Text("Game is Unavailable")
-                        .font(.largeTitle)
-                    Text("Please select another theme or add emojis to theme")
-                    Spacer()
+                    gameUnavailableBody
                 }
                 HStack {
                     VStack(alignment: .leading) {
@@ -92,6 +89,15 @@ struct EmojiMemoryGameView: View {
             }
         }
         .foregroundColor(Color(rgbaColor: theme.cardColor))
+    }
+    
+    var gameUnavailableBody: some View {
+        VStack {
+            Text("Game is Unavailable")
+                .font(.largeTitle)
+            Text("Please select another theme or add emojis to theme")
+            Spacer()
+        }
     }
     
     var deckBody: some View {

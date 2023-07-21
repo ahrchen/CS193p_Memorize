@@ -59,11 +59,27 @@ class ThemeStore: ObservableObject {
         }
     }
     
+    // MARK: - Intent
+    
+    func theme(at index: Int) -> Theme {
+        let safeIndex = min(max(index,0), themes.count - 1)
+        return themes[safeIndex]
+    }
+    
+    @discardableResult
+    func removeTheme(at index: Int) -> Int {
+        if themes.count > 1, themes.indices.contains(index) {
+            themes.remove(at: index)
+        }
+        return index % themes.count
+    }
+    
     func insertTheme(named name: String, emojis: String? = nil, at index: Int = 0) {
         let unique = (themes.max(by: {$0.id < $1.id})?.id ?? 0) + 1
         let theme = Theme(name: name, emojis: emojis ?? "", id: unique)
         let safeIndex = min(max(index, 0), themes.count)
         themes.insert(theme, at: safeIndex)
+        chosenThemeIndex = safeIndex
     }
 }
 
