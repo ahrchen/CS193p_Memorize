@@ -36,7 +36,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
         }
-        print("\(cards)")
     }
     
     mutating func shuffle() {
