@@ -18,6 +18,7 @@ struct ThemeEditor: View {
             cardColorPicker
             addEmojisSection
             removeEmojisSection
+            removedEmojisSection
             
         }
         .navigationTitle("Edit \(theme.name)")
@@ -53,6 +54,8 @@ struct ThemeEditor: View {
         }
     }
     
+    @State private var emojisToRemove = ""
+    
     var removeEmojisSection: some View {
         Section {
             let emojis = theme.emojis.removingDuplicateCharacters.map { String($0) }
@@ -61,6 +64,7 @@ struct ThemeEditor: View {
                     Text(emoji)
                         .onTapGesture {
                             withAnimation {
+                                emojisToRemove =  (emojisToRemove + emoji)
                                 theme.emojis.removeAll(where: {String($0) == emoji})
                             }
                         }
@@ -68,6 +72,25 @@ struct ThemeEditor: View {
             }
         } header: {
             Text("Remove Emoji")
+        }
+    }
+    
+    var removedEmojisSection: some View {
+        Section {
+            let emojis = emojisToRemove.removingDuplicateCharacters.map { String($0) }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 40))]) {
+                ForEach(emojis, id: \.self) { emoji in
+                    Text(emoji)
+                        .onTapGesture {
+                            withAnimation {
+                                addEmojis(emoji)
+                                emojisToRemove.removeAll(where: {String($0) == emoji})
+                            }
+                        }
+                }
+            }
+        } header: {
+            Text("Removed Emoji")
         }
     }
     
