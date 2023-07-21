@@ -13,6 +13,7 @@ struct ThemeChooser: View {
     @ObservedObject var game: EmojiMemoryGame
     @State var showingGoToMenu = false
     @State var themeToEdit: Theme?
+    @State private var managing = false
     
     var chosenTheme: Theme {
         store.themes[store.chosenThemeIndex]
@@ -25,6 +26,9 @@ struct ThemeChooser: View {
                     .onDisappear {
                         game.changeThemes(theme: chosenTheme)
                     }
+            }
+            .sheet(isPresented: $managing) {
+                ThemeManager()
             }
             
     }
@@ -61,7 +65,7 @@ struct ThemeChooser: View {
             store.chosenThemeIndex = store.removeTheme(at: store.chosenThemeIndex)
         }
         AnimatedActionButton(title: "Manager", systemImage: "slider.vertical.3") {
-            // Manage Themes
+            managing = true
         }
         Button("Show Sheet") {
             showingGoToMenu.toggle()
